@@ -19,7 +19,6 @@ O projeto permite selecionar cidades pré-definidas e visualizar detalhes climá
 * 🎨 Tema dinâmico baseado nas condições climáticas (`clear` | `snow`)
 * 🧭 Navegação entre páginas com React Router
 * 🧩 Arquitetura desacoplada com hooks e configuração de tema
-* 📦 Containerização com Docker
 
 ---
 
@@ -110,6 +109,3 @@ Acesse em:
 Desenvolvido por **Juan Silva**
 Desafio de Front-end — SEDUH
 
-
-* deixo ele mais **enxuto** (versão recruiter)
-* ou ajusto pra bater exatamente com o enunciado do desafio
