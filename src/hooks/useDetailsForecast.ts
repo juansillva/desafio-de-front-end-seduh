@@ -39,7 +39,6 @@ export const useDetailsForecast = () => {
 
   const forecast = state?.forecast;
 
-  // redirecionamento em efeito (não durante render)
   useEffect(() => {
     if (!forecast) {
       navigate("/", { replace: true });
