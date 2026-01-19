@@ -1,4 +1,3 @@
-
 /**
  * useDetailsForecast
  *
@@ -23,6 +22,7 @@
  * reutilização e testabilidade.
  */
 
+import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getThemeByWeather, THEME_CONFIG } from "../styles/themes/theme.config";
 
@@ -37,23 +37,31 @@ export const useDetailsForecast = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
 
-  if (!state?.forecast) {
-    navigate("/");
-    return null;
-  }
+  const forecast = state?.forecast;
 
-  const { forecast } = state;
+  // redirecionamento em efeito (não durante render)
+  useEffect(() => {
+    if (!forecast) {
+      navigate("/", { replace: true });
+    }
+  }, [forecast, navigate]);
+
+  if (!forecast) return null;
 
   const theme = getThemeByWeather(forecast);
   const icons = THEME_CONFIG[theme].icons;
 
-  const hours = forecast.forecast.forecastday[0].hour;
+  const hours =
+    forecast?.forecast?.forecastday?.[0]?.hour ??
+    ([] as { time?: string; temp_c?: number; condition?: any }[]);
 
   const dayParts = Object.entries(HOURS_MAP).map(([label, time]) => {
-    const hourData = hours.find((h:any) => h.time?.endsWith(time));
+    const hourData = hours.find((h: { time?: string }) =>
+      h.time?.endsWith(time),
+    );
     return {
       label,
-      temp: hourData?.temp_c,
+      temp: hourData?.temp_c ?? null,
     };
   });
 
