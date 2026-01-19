@@ -1,83 +1,73 @@
-## ⚙️ Desafio de Front-end
+# React + TypeScript + Vite
 
----
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-### 📝 Descrição do Projeto
+Currently, two official plugins are available:
 
-Desenvolver um **Web Application** que permita aos usuários **listar** e **selecionar** uma das cidades pré-definidas para, em seguida, exibir uma tela de **detalhes** com as **informações climáticas** da cidade escolhida, utilizando uma **API pública** de dados meteorológicos.
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
----
+## React Compiler
 
-### 📍 Cidades para Listagem
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-O aplicativo deve listar obrigatoriamente as seguintes cidades e seus respectivos países:
+## Expanding the ESLint configuration
 
-* **Dallol** (Etiópia - ET)
-* **Fairbanks** (Estados Unidos - US)
-* **Londres** (Reino Unido - GB)
-* **Recife** (Brasil - BR)
-* **Vancouver** (Canadá - CA)
-* **Yakutsk** (Rússia - RU)
+If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
 
----
+```js
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
 
-### ☁️ Integração e Dados Climáticos
+      // Remove tseslint.configs.recommended and replace with this
+      tseslint.configs.recommendedTypeChecked,
+      // Alternatively, use this for stricter rules
+      tseslint.configs.strictTypeChecked,
+      // Optionally, add this for stylistic rules
+      tseslint.configs.stylisticTypeChecked,
 
-* **APIs Sugeridas:**
-    * [OpenWeatherMap - Current Weather](https://www.openweathermap.org/current)
-    * [WeatherAPI](https://www.weatherapi.com)
+      // Other configs...
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
+```
 
-* **Layout (Figma):**
-    * [Link do Layout](https://www.figma.com/design/HNu9zrHdknRvoQyVPvk08g/Sem-t%C3%ADtulo?node-id=0-1&t=XxZtZTWhxKPbfuKY-1)
+You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
-* **Horários de Referência:** Para exibição de temperaturas específicas do dia, use os seguintes horários (conforme o fuso horário da cidade):
-    * **Dawn (Amanhecer):** $03:00$
-    * **Morning (Manhã):** $09:00$
-    * **Afternoon (Tarde):** $15:00$
-    * **Night (Noite):** $21:00$
+```js
+// eslint.config.js
+import reactX from 'eslint-plugin-react-x'
+import reactDom from 'eslint-plugin-react-dom'
 
-* **Ícones:** Utilize os ícones fornecidos no layout para representar as condições climáticas de forma coerente.
-
----
-
-### 💻 Requisitos Técnicos e de Avaliação
-
-#### 1. Estrutura e Preparação
-* **Fork do Repositório:** Realizar o fork deste repositório para iniciar o desenvolvimento.
-
-#### 2. Hospedagem
-* O projeto final deve ser publicado e acessível através de uma das seguintes plataformas:
-    * **Netlify**
-    * **Vercel**
-
-#### 3. Frontend e Frameworks
-* **Frameworks Opcionais (Preferência na Ordem):**
-    1.  **React** com **Next.js**
-    2.  **React** com **Vite**
-    3.  **Angular**
-
-#### 4. Design e Responsividade
-* **Fidelidade ao Layout:** A implementação deve seguir rigorosamente o design fornecido no link do Figma.
-* **Responsividade:** O layout deve se adaptar corretamente a **3 breakpoints** principais:
-    * **Smartphone**
-    * **Tablet**
-    * **Desktop**
-
-#### 5. Qualidade de Código
-* **Testes Unitários:** Implementar testes unitários para garantir a funcionalidade e a qualidade do código.
-
----
-
-### ⭐ Diferenciais (Plus)
-
-* **Containerização:** Opcionalmente, configure o projeto para **rodar através de um container Docker**.
-
----
-
-### 🚀 Entrega
-
-Após finalizar o projeto e publicá-lo, responda ao nosso contato enviando o **link do repositório (fork)** e o **link da aplicação hospedada**.
-
-**Boa sorte!**
-
----
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
+      // Enable lint rules for React
+      reactX.configs['recommended-typescript'],
+      // Enable lint rules for React DOM
+      reactDom.configs.recommended,
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
+```
